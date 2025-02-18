@@ -208,9 +208,9 @@ function calculatePath() {
   }
 }
 
-$("input").on("input", () => {
-  $("#buscarCamino").click();
-});
+// $("input").on("input", () => {
+//   $("#buscarCamino").click();
+// });
 
 $(() => {
   $("#buscarCamino").click();
