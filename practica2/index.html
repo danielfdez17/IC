@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Árbol de Decisión ID3</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .container { max-width: 600px; margin: auto; padding: 20px; }
+        textarea { width: 100%; height: 100px; }
+        button { margin-top: 10px; padding: 10px; }
+        pre { text-align: left; background: #f4f4f4; padding: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Árbol de Decisión ID3</h2>
+        <label for="atributos">Atributos:</label>
+        <textarea id="atributos" readonly>TiempoExterior,Temperatura,Humedad,Viento,Jugar</textarea>
+        <label for="datos">Datos:</label>
+        <textarea id="datos" readonly>
+soleado,caluroso,alta,falso,no
+soleado,caluroso,alta,verdad,no
+nublado,caluroso,alta,falso,si
+lluvioso,templado,alta,falso,si
+lluvioso,frio,normal,falso,si
+lluvioso,frio,normal,verdad,no
+nublado,frio,normal,verdad,si
+soleado,templado,alta,falso,no
+soleado,frio,normal,falso,si
+lluvioso,templado,normal,falso,si
+soleado,templado,normal,verdad,si
+nublado,templado,alta,verdad,si
+nublado,caluroso,normal,falso,si
+lluvioso,templado,alta,verdad,no
+        </textarea>
+        <button onclick="ejecutarID3()">Ejecutar ID3</button>
+        <h3>Resultado:</h3>
+        <pre id="resultado"></pre>
+        
+        <h3>Prueba tu ejemplo</h3>
+        <form id="ejemploForm">
+            <label for="tiempo">Tiempo Exterior:</label>
+            <select id="tiempo">
+                <option value="soleado">Soleado</option>
+                <option value="nublado">Nublado</option>
+                <option value="lluvioso">Lluvioso</option>
+            </select>
+            <label for="temperatura">Temperatura:</label>
+            <select id="temperatura">
+                <option value="caluroso">Caluroso</option>
+                <option value="templado">Templado</option>
+                <option value="frio">Frío</option>
+            </select>
+            <label for="humedad">Humedad:</label>
+            <select id="humedad">
+                <option value="alta">Alta</option>
+                <option value="normal">Normal</option>
+            </select>
+            <label for="viento">Viento:</label>
+            <select id="viento">
+                <option value="falso">Falso</option>
+                <option value="verdad">Verdad</option>
+            </select>
+            <button type="button" onclick="clasificarEjemplo()">Clasificar</button>
+        </form>
+        <h3>Decisión:</h3>
+        <pre id="decision"></pre>
+    </div>
+    <script>
+        let arbolDecision;
+
+        function calcularEntropia(datos, atributo) {
+            let conteo = {};
+            datos.forEach(fila => {
+                let clave = fila[atributo];
+                conteo[clave] = (conteo[clave] || 0) + 1;
+            });
+            let entropia = 0;
+            let total = datos.length;
+            for (let clave in conteo) {
+                let p = conteo[clave] / total;
+                entropia -= p * Math.log2(p);
+            }
+            return entropia;
+        }
+
+        function mejorAtributo(datos, atributos) {
+            let minEntropia = Infinity;
+            let mejor = null;
+            atributos.forEach(atributo => {
+                let entropia = calcularEntropia(datos, atributo);
+                if (entropia < minEntropia) {
+                    minEntropia = entropia;
+                    mejor = atributo;
+                }
+            });
+            return mejor;
+        }
+
+        function id3(datos, atributos) {
+            let decisiones = [...new Set(datos.map(fila => fila["Jugar"]))];
+            if (decisiones.length === 1) {
+                return decisiones[0];
+            }
+            if (atributos.length === 0) {
+                return "Desconocido";
+            }
+            let mejor = mejorAtributo(datos, atributos);
+            let valores = [...new Set(datos.map(fila => fila[mejor]))];
+            let resultado = {};
+            valores.forEach(valor => {
+                let subconjunto = datos.filter(fila => fila[mejor] === valor);
+                let nuevosAtributos = atributos.filter(a => a !== mejor);
+                resultado[valor] = id3(subconjunto, nuevosAtributos);
+            });
+            return { [mejor]: resultado };
+        }
+
+        function ejecutarID3() {
+            let atributos = document.getElementById("atributos").value.trim().split(",");
+            let datos = document.getElementById("datos").value.trim().split("\n").map(linea => {
+                let valores = linea.split(",");
+                let obj = {};
+                atributos.forEach((attr, index) => obj[attr] = valores[index]);
+                return obj;
+            });
+            arbolDecision = id3(datos, atributos.slice(0, -1));
+            document.getElementById("resultado").textContent = JSON.stringify(arbolDecision, null, 2);
+        }
+
+        function clasificarEjemplo() {
+            if (!arbolDecision) {
+                document.getElementById("decision").textContent = "Ejecuta el algoritmo ID3 primero.";
+                return;
+            }
+            let ejemplo = {
+                "TiempoExterior": document.getElementById("tiempo").value,
+                "Temperatura": document.getElementById("temperatura").value,
+                "Humedad": document.getElementById("humedad").value,
+                "Viento": document.getElementById("viento").value
+            };
+            let nodo = arbolDecision;
+            while (typeof nodo === "object") {
+                let clave = Object.keys(nodo)[0];
+                nodo = nodo[clave][ejemplo[clave]];
+                if (!nodo) {
+                    nodo = "Desconocido";
+                    break;
+                }
+            }
+            document.getElementById("decision").textContent = nodo;
+        }
+    </script>
+</body>
+</html>
