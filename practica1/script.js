@@ -112,6 +112,43 @@ function parseCoordinates(input) {
   });
 }
 
+// function renderGrid(
+//   rows,
+//   columns,
+//   grid,
+//   start,
+//   end,
+//   path,
+//   obstacles,
+//   waypoints
+// ) {
+//   const gridContainer = document.getElementById("grid");
+//   gridContainer.style.gridTemplateRows = `repeat(${rows}, 50px)`;
+//   gridContainer.style.gridTemplateColumns = `repeat(${columns}, 50px)`;
+//   gridContainer.innerHTML = "";
+
+//   for (let i = 0; i < rows; i++) {
+//     for (let j = 0; j < columns; j++) {
+//       const cell = document.createElement("div");
+//       cell.classList.add("cell");
+
+//       if (obstacles.some(([x, y]) => x === i && y === j)) {
+//         cell.classList.add("obstacle");
+//       } else if (start[0] === i && start[1] === j) {
+//         cell.classList.add("start");
+//       } else if (end[0] === i && end[1] === j) {
+//         cell.classList.add("end");
+//       } else if (waypoints.some(([x, y]) => x === i && y === j)) {
+//         cell.classList.add("waypoint");
+//       } else if (path.some(([x, y]) => x === i && y === j)) {
+//         cell.classList.add("path");
+//       }
+
+//       gridContainer.appendChild(cell);
+//     }
+//   }
+// }
+
 function renderGrid(
   rows,
   columns,
@@ -123,25 +160,35 @@ function renderGrid(
   waypoints
 ) {
   const gridContainer = document.getElementById("grid");
-  gridContainer.style.gridTemplateRows = `repeat(${rows}, 50px)`;
-  gridContainer.style.gridTemplateColumns = `repeat(${columns}, 50px)`;
+  gridContainer.style.display = "grid";
+  gridContainer.style.gridTemplateRows = `repeat(${rows + 1}, 50px)`;
+  gridContainer.style.gridTemplateColumns = `repeat(${columns + 1}, 50px)`;
   gridContainer.innerHTML = "";
 
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < columns; j++) {
+  for (let i = -1; i < rows; i++) {
+    for (let j = -1; j < columns; j++) {
       const cell = document.createElement("div");
       cell.classList.add("cell");
-
-      if (obstacles.some(([x, y]) => x === i && y === j)) {
-        cell.classList.add("obstacle");
-      } else if (start[0] === i && start[1] === j) {
-        cell.classList.add("start");
-      } else if (end[0] === i && end[1] === j) {
-        cell.classList.add("end");
-      } else if (waypoints.some(([x, y]) => x === i && y === j)) {
-        cell.classList.add("waypoint");
-      } else if (path.some(([x, y]) => x === i && y === j)) {
-        cell.classList.add("path");
+      if (i === -1 && j >= 0) {
+        cell.textContent = "y" + j;
+        cell.style.fontWeight = "bold";
+        cell.style.backgroundColor = "#c4c4c4";
+      } else if (j === -1 && i >= 0) {
+        cell.textContent = "x" + i;
+        cell.style.fontWeight = "bold";
+        cell.style.backgroundColor = "#c4c4c4";
+      } else if (i >= 0 && j >= 0) {
+        if (obstacles.some(([x, y]) => x === i && y === j)) {
+          cell.classList.add("obstacle");
+        } else if (start[0] === i && start[1] === j) {
+          cell.classList.add("start");
+        } else if (end[0] === i && end[1] === j) {
+          cell.classList.add("end");
+        } else if (waypoints.some(([x, y]) => x === i && y === j)) {
+          cell.classList.add("waypoint");
+        } else if (path.some(([x, y]) => x === i && y === j)) {
+          cell.classList.add("path");
+        }
       }
 
       gridContainer.appendChild(cell);
