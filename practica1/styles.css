@@ -54,9 +54,13 @@ button:hover {
 
 .grid {
   display: grid;
-  margin: 20px auto;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
+  overflow-x: auto;
+  overflow-y: auto;
+  max-width: 90vw;
+  max-height: 80vh;
 }
 
 .cell {
