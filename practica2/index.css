@@ -1,0 +1,15 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+#datos {
+  height: 100px;
+}
+
+
+pre {
+  text-align: left;
+  background: #f4f4f4;
+  padding: 10px;
+}
