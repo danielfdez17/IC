@@ -1,4 +1,5 @@
 "use strict";
+let timeoutId = null;
 class Nodo {
   constructor(posicion, padre = null) {
     this.posicion = posicion;
@@ -259,6 +260,158 @@ function calculatePath() {
 //   $("#buscarCamino").click();
 // });
 
+$("#reset").on("click", () => {
+  $("#obstacles").val("");
+  $("#start").val("");
+  $("#end").val("");
+  $("#waypoints").val("");
+  location.reload();
+});
+
 $(() => {
+  const grid = document.getElementById("grid");
+  let startCell = null;
+  let endCell = null;
+  const obstacles = new Set();
+  const waypoints = new Set();
+  let mode = "start"; // Modo actual: start, end, obstacle, waypoint
+
+  function updateForm() {
+    document.getElementById("start").value = startCell
+      ? startCell.dataset.coord
+      : "";
+    document.getElementById("end").value = endCell ? endCell.dataset.coord : "";
+    document.getElementById("obstacles").value =
+      Array.from(obstacles).join(";");
+    document.getElementById("waypoints").value =
+      Array.from(waypoints).join(";");
+  }
+
+  function handleCellClick(cell) {
+    const coord = cell.dataset.coord;
+
+    if (mode === "start") {
+      if (startCell) startCell.classList.remove("start");
+      startCell = cell;
+      startCell.classList.add("start");
+    } else if (mode === "end") {
+      if (endCell) endCell.classList.remove("end");
+      endCell = cell;
+      endCell.classList.add("end");
+    } else if (mode === "obstacle") {
+      if (!obstacles.has(coord)) {
+        obstacles.add(coord);
+        cell.classList.add("obstacle");
+      } else {
+        obstacles.delete(coord);
+        cell.classList.remove("obstacle");
+      }
+    } else if (mode === "waypoint") {
+      if (!waypoints.has(coord)) {
+        waypoints.add(coord);
+        cell.classList.add("waypoint");
+      } else {
+        waypoints.delete(coord);
+        cell.classList.remove("waypoint");
+      }
+    }
+
+    updateForm();
+  }
+
+  function createGrid(rows, cols) {
+    grid.innerHTML = "";
+    grid.style.gridTemplateColumns = `repeat(${cols}, 50px)`;
+    grid.style.gridTemplateRows = `repeat(${rows}, 50px)`;
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        cell.dataset.coord = `${r},${c}`; // Ajuste para corregir la orientación del grid
+        cell.addEventListener("click", () => handleCellClick(cell));
+        grid.appendChild(cell);
+      }
+    }
+  }
+
+  document
+    .getElementById("astar-form")
+    .addEventListener("submit", function (e) {
+      e.preventDefault();
+      const rows = parseInt(document.getElementById("rows").value, 10);
+      const cols = parseInt(document.getElementById("columns").value, 10);
+      createGrid(rows, cols);
+    });
+
+    
+
+  function changeMode(modeStr) {
+    if (modeStr === "inicio") {
+      mode = "start";
+      $("#mode").text(modeStr);
+      $("#mode")[0].classList = "";
+      $("#mode").addClass(mode);
+    } else if (modeStr === "final") {
+      mode = "end";
+      $("#mode").text(modeStr);
+      $("#mode")[0].classList = "";
+      $("#mode").addClass(mode);
+    } else if (modeStr === "obstáculo") {
+      mode = "obstacle";
+      $("#mode").text(modeStr);
+      $("#mode")[0].classList = "";
+      $("#mode").addClass(mode);
+    } else if (modeStr === "waypoint") {
+      mode = "waypoint";
+      $("#mode").text(modeStr);
+      $("#mode")[0].classList = "";
+      $("#mode").addClass(mode);
+    }
+  }
+
+  $("#startBtn").on("click", () => {
+    changeMode("inicio");
+  });
+  $("#endBtn").on("click", () => {
+    changeMode("final");
+  });
+  $("#waypointsBtn").on("click", () => {
+    changeMode("obstáculo");
+  });
+  $("#obstaculosBtn").on("click", () => {
+    changeMode("waypoint");
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "s") {
+      changeMode("inicio");
+    } else if (e.key === "e") {
+      changeMode("final");
+    } else if (e.key === "o") {
+      changeMode("obstáculo");
+    } else if (e.key === "w") {
+      changeMode("waypoint");
+    }
+  });
+
+  //   createGrid(10, 10);
+  $("#rows").on("input", () => {
+    if (timeoutId) clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      createGrid(Number($("#rows").val()), Number($("#columns").val()));
+    }, 500);
+  });
+  $("#columns").on("input", () => {
+    if (timeoutId) clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      createGrid(Number($("#rows").val()), Number($("#columns").val()));
+    }, 500);
+  });
+  createGrid(Number($("#rows").val()), Number($("#columns").val()));
+
+  // Código del script.js original fusionado aquí
+  // Asegúrate de agregar cualquier funcionalidad que estaba en el archivo original
+
   $("#buscarCamino").click();
 });

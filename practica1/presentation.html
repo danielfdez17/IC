@@ -18,26 +18,35 @@
             <div class="col-4">
 
                 <h1>Algoritmo A* 🧭</h1>
+
+                <h2>Selección de celda: <p id="mode" class="start">inicio</p></h2>
+                <legend>
+                    <button type="button" id="startBtn" class="btn text-center start">s: start</button>
+                    <button type="button" id="endBtn" class="btn text-center end">e: end</button>
+                    <button type="button" id="waypointsBtn" class="btn text-center waypoint">w: waypoints</button>
+                    <button type="button" id="obstaculosBtn" class="btn text-center obstacle">o: obstaculos</button>
+                </legend>
                 <form id="astar-form">
                     <label for="rows">Número de filas:</label>
-                    <input type="number" id="rows" min="1" value="10" required>
+                    <input type="number" id="rows" min="1" max="30" value="10" required>
 
                     <label for="columns">Número de columnas:</label>
-                    <input type="number" id="columns" min="1" value="10" required>
+                    <input type="number" id="columns" min="1" max="30" value="10" required>
 
                     <label for="obstacles">Obstáculos (formato: x1,y1;x2,y2):</label>
                     <input type="text" id="obstacles">
 
                     <label for="start">Posición inicial (formato: x,y):</label>
-                    <input type="text" value="0,0" id="start" required>
+                    <input type="text" id="start" required>
 
                     <label for="end">Posición final (formato: x,y):</label>
-                    <input type="text" value="9,9" id="end" required>
+                    <input type="text" id="end" required>
 
                     <label for="waypoints">Waypoints (formato: x1,y1;x2,y2):</label>
                     <input type="text" id="waypoints">
 
                     <button id="buscarCamino" type="button" onclick="calculatePath()">Calcular Camino</button>
+                    <button id="reset" type="reset">Resetear</button>
                 </form>
             </div>
 
