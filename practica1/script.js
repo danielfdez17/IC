@@ -113,43 +113,6 @@ function parseCoordinates(input) {
   });
 }
 
-// function renderGrid(
-//   rows,
-//   columns,
-//   grid,
-//   start,
-//   end,
-//   path,
-//   obstacles,
-//   waypoints
-// ) {
-//   const gridContainer = document.getElementById("grid");
-//   gridContainer.style.gridTemplateRows = `repeat(${rows}, 50px)`;
-//   gridContainer.style.gridTemplateColumns = `repeat(${columns}, 50px)`;
-//   gridContainer.innerHTML = "";
-
-//   for (let i = 0; i < rows; i++) {
-//     for (let j = 0; j < columns; j++) {
-//       const cell = document.createElement("div");
-//       cell.classList.add("cell");
-
-//       if (obstacles.some(([x, y]) => x === i && y === j)) {
-//         cell.classList.add("obstacle");
-//       } else if (start[0] === i && start[1] === j) {
-//         cell.classList.add("start");
-//       } else if (end[0] === i && end[1] === j) {
-//         cell.classList.add("end");
-//       } else if (waypoints.some(([x, y]) => x === i && y === j)) {
-//         cell.classList.add("waypoint");
-//       } else if (path.some(([x, y]) => x === i && y === j)) {
-//         cell.classList.add("path");
-//       }
-
-//       gridContainer.appendChild(cell);
-//     }
-//   }
-// }
-
 function renderGrid(
   rows,
   columns,
@@ -243,7 +206,8 @@ function calculatePath() {
         position: "left",
         stopOnFocus: true,
         style: {
-          background: "linear-gradient(to right, #00b09b, #96c93d)",
+          background:
+            "linear-gradient(to left,rgb(176, 0, 0),rgb(201, 180, 61))",
         },
       }).showToast();
       return null;
@@ -255,10 +219,6 @@ function calculatePath() {
     renderGrid(rows, columns, grid, start, end, path, obstacles, waypoints);
   }
 }
-
-// $("input").on("input", () => {
-//   $("#buscarCamino").click();
-// });
 
 $("#reset").on("click", () => {
   $("#obstacles").val("");
@@ -344,8 +304,6 @@ $(() => {
       createGrid(rows, cols);
     });
 
-    
-
   function changeMode(modeStr) {
     if (modeStr === "inicio") {
       mode = "start";
@@ -395,7 +353,6 @@ $(() => {
     }
   });
 
-  //   createGrid(10, 10);
   $("#rows").on("input", () => {
     if (timeoutId) clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
@@ -410,8 +367,6 @@ $(() => {
   });
   createGrid(Number($("#rows").val()), Number($("#columns").val()));
 
-  // Código del script.js original fusionado aquí
-  // Asegúrate de agregar cualquier funcionalidad que estaba en el archivo original
 
   $("#buscarCamino").click();
 });
