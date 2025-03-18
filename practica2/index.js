@@ -1,4 +1,8 @@
 "use strict";
+const tiempo = document.getElementById("tiempo");
+const temperatura = document.getElementById("temperatura");
+const humedad = document.getElementById("humedad");
+const viento = document.getElementById("viento");
 let arbolDecision;
 
 function calcularEntropia(datos, atributo) {
@@ -61,11 +65,11 @@ function ejecutarID3() {
       return obj;
     });
   arbolDecision = id3(datos, atributos.slice(0, -1));
-  document.getElementById("resultado").textContent = JSON.stringify(
-    arbolDecision,
-    null,
-    2
-  );
+  //   document.getElementById("resultado").textContent = JSON.stringify(
+  //     arbolDecision,
+  //     null,
+  //     2
+  //   );
 }
 
 function clasificarEjemplo() {
@@ -90,6 +94,16 @@ function clasificarEjemplo() {
     }
   }
   document.getElementById("decision").textContent = nodo;
+  const valores = document.getElementById("valores");
+  valores.textContent =
+    tiempo.value +
+    " " +
+    temperatura.value +
+    " " +
+    humedad.value +
+    " " +
+    viento.value;
+  valores.classList = "p-1 border border-1 border-black rounded";
 }
 
 document.getElementById("ejecutarID3").click();

@@ -41,7 +41,7 @@ lluvioso,templado,alta,verdad,no
         <form id="ejemploForm" class="row">
             <div class="mb-3 col-3">
                 <label for="tiempo">Tiempo Exterior</label>
-                <select class="form-select" id="tiempo">
+                <select class="form-select" multiple id="tiempo">
                     <option value="soleado">Soleado</option>
                     <option value="nublado">Nublado</option>
                     <option value="lluvioso">Lluvioso</option>
@@ -49,7 +49,7 @@ lluvioso,templado,alta,verdad,no
             </div>
             <div class="mb-3 col-3">
                 <label for="temperatura">Temperatura</label>
-                <select class="form-select" id="temperatura">
+                <select class="form-select" multiple id="temperatura">
                     <option value="caluroso">Caluroso</option>
                     <option value="templado">Templado</option>
                     <option value="frio">Frío</option>
@@ -57,22 +57,23 @@ lluvioso,templado,alta,verdad,no
             </div>
             <div class="mb-3 col-3">
                 <label for="humedad">Humedad</label>
-                <select class="form-select" id="humedad">
+                <select class="form-select" multiple id="humedad">
                     <option value="alta">Alta</option>
                     <option value="normal">Normal</option>
                 </select>
             </div>
             <div class="mb-3 col-3">
                 <label for="viento">Viento</label>
-                <select class="form-select" id="viento">
+                <select class="form-select" multiple id="viento">
                     <option value="falso">Falso</option>
                     <option value="verdad">Verdad</option>
                 </select>
             </div>
-            <button class="btn btn-success mt-3 ms-auto me-auto col-4" type="button"
+            
+            <button class="btn btn-success mt-3 ms-auto me-auto mb-3" type="button"
                 onclick="clasificarEjemplo()">Clasificar</button>
-                <h3 class="col-4">Decisión:</h3>
-                <pre class="col-4" id="decision"></pre>
+            <h3 class="col-md-6">Decisión: <span id="valores"></span></h3>
+            <pre class="col-md-6 border border-2 border-black fs-4 text-uppercase" id="decision"></pre>
         </form>
         <div class="section row mt-4">
         </div>
