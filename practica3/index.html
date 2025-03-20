@@ -1,35 +1,171 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clasificación de Datos</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        .container { width: 50%; margin: auto; }
-        textarea { width: 100%; height: 150px; }
-        input { width: 80%; padding: 5px; margin: 10px 0; }
-        button { margin: 10px; padding: 10px; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .container {
+            width: 50%;
+            margin: auto;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+        }
+
+        input {
+            width: 80%;
+            padding: 5px;
+            margin: 10px 0;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px;
+        }
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
+
 <body>
     <div class="container">
-        <h1>Clasificación de Datos</h1>
-        <textarea id="inputData" placeholder="Ingrese los datos..."></textarea>
+        <h1 class="text-center fw-bold text-uppercase mt-3">Clasificación de Datos</h1>
+        <textarea id="inputData" placeholder="Ingrese los datos..." readonly>
+5.1,3.5,1.4,0.2,Iris-setosa
+4.9,3.0,1.4,0.2,Iris-setosa
+4.7,3.2,1.3,0.2,Iris-setosa
+4.6,3.1,1.5,0.2,Iris-setosa
+5.0,3.6,1.4,0.2,Iris-setosa
+5.4,3.9,1.7,0.4,Iris-setosa
+4.6,3.4,1.4,0.3,Iris-setosa
+5.0,3.4,1.5,0.2,Iris-setosa
+4.4,2.9,1.4,0.2,Iris-setosa
+4.9,3.1,1.5,0.1,Iris-setosa
+5.4,3.7,1.5,0.2,Iris-setosa
+4.8,3.4,1.6,0.2,Iris-setosa
+4.8,3.0,1.4,0.1,Iris-setosa
+4.3,3.0,1.1,0.1,Iris-setosa
+5.8,4.0,1.2,0.2,Iris-setosa
+5.7,4.4,1.5,0.4,Iris-setosa
+5.4,3.9,1.3,0.4,Iris-setosa
+5.1,3.5,1.4,0.3,Iris-setosa
+5.7,3.8,1.7,0.3,Iris-setosa
+5.1,3.8,1.5,0.3,Iris-setosa
+5.4,3.4,1.7,0.2,Iris-setosa
+5.1,3.7,1.5,0.4,Iris-setosa
+4.6,3.6,1.0,0.2,Iris-setosa
+5.1,3.3,1.7,0.5,Iris-setosa
+4.8,3.4,1.9,0.2,Iris-setosa
+5.0,3.0,1.6,0.2,Iris-setosa
+5.0,3.4,1.6,0.4,Iris-setosa
+5.2,3.5,1.5,0.2,Iris-setosa
+5.2,3.4,1.4,0.2,Iris-setosa
+4.7,3.2,1.6,0.2,Iris-setosa
+4.8,3.1,1.6,0.2,Iris-setosa
+5.4,3.4,1.5,0.4,Iris-setosa
+5.2,4.1,1.5,0.1,Iris-setosa
+5.5,4.2,1.4,0.2,Iris-setosa
+4.9,3.1,1.5,0.1,Iris-setosa
+5.0,3.2,1.2,0.2,Iris-setosa
+5.5,3.5,1.3,0.2,Iris-setosa
+4.9,3.1,1.5,0.1,Iris-setosa
+4.4,3.0,1.3,0.2,Iris-setosa
+5.1,3.4,1.5,0.2,Iris-setosa
+5.0,3.5,1.3,0.3,Iris-setosa
+4.5,2.3,1.3,0.3,Iris-setosa
+4.4,3.2,1.3,0.2,Iris-setosa
+5.0,3.5,1.6,0.6,Iris-setosa
+5.1,3.8,1.9,0.4,Iris-setosa
+4.8,3.0,1.4,0.3,Iris-setosa
+5.1,3.8,1.6,0.2,Iris-setosa
+4.6,3.2,1.4,0.2,Iris-setosa
+5.3,3.7,1.5,0.2,Iris-setosa
+5.0,3.3,1.4,0.2,Iris-setosa
+7.0,3.2,4.7,1.4,Iris-versicolor
+6.4,3.2,4.5,1.5,Iris-versicolor
+6.9,3.1,4.9,1.5,Iris-versicolor
+5.5,2.3,4.0,1.3,Iris-versicolor
+6.5,2.8,4.6,1.5,Iris-versicolor
+5.7,2.8,4.5,1.3,Iris-versicolor
+6.3,3.3,4.7,1.6,Iris-versicolor
+4.9,2.4,3.3,1.0,Iris-versicolor
+6.6,2.9,4.6,1.3,Iris-versicolor
+5.2,2.7,3.9,1.4,Iris-versicolor
+5.0,2.0,3.5,1.0,Iris-versicolor
+5.9,3.0,4.2,1.5,Iris-versicolor
+6.0,2.2,4.0,1.0,Iris-versicolor
+6.1,2.9,4.7,1.4,Iris-versicolor
+5.6,2.9,3.6,1.3,Iris-versicolor
+6.7,3.1,4.4,1.4,Iris-versicolor
+5.6,3.0,4.5,1.5,Iris-versicolor
+5.8,2.7,4.1,1.0,Iris-versicolor
+6.2,2.2,4.5,1.5,Iris-versicolor
+5.6,2.5,3.9,1.1,Iris-versicolor
+5.9,3.2,4.8,1.8,Iris-versicolor
+6.1,2.8,4.0,1.3,Iris-versicolor
+6.3,2.5,4.9,1.5,Iris-versicolor
+6.1,2.8,4.7,1.2,Iris-versicolor
+6.4,2.9,4.3,1.3,Iris-versicolor
+6.6,3.0,4.4,1.4,Iris-versicolor
+6.8,2.8,4.8,1.4,Iris-versicolor
+6.7,3.0,5.0,1.7,Iris-versicolor
+6.0,2.9,4.5,1.5,Iris-versicolor
+5.7,2.6,3.5,1.0,Iris-versicolor
+5.5,2.4,3.8,1.1,Iris-versicolor
+5.5,2.4,3.7,1.0,Iris-versicolor
+5.8,2.7,3.9,1.2,Iris-versicolor
+6.0,2.7,5.1,1.6,Iris-versicolor
+5.4,3.0,4.5,1.5,Iris-versicolor
+6.0,3.4,4.5,1.6,Iris-versicolor
+6.7,3.1,4.7,1.5,Iris-versicolor
+6.3,2.3,4.4,1.3,Iris-versicolor
+5.6,3.0,4.1,1.3,Iris-versicolor
+5.5,2.5,4.0,1.3,Iris-versicolor
+5.5,2.6,4.4,1.2,Iris-versicolor
+6.1,3.0,4.6,1.4,Iris-versicolor
+5.8,2.6,4.0,1.2,Iris-versicolor
+5.0,2.3,3.3,1.0,Iris-versicolor
+5.6,2.7,4.2,1.3,Iris-versicolor
+5.7,3.0,4.2,1.2,Iris-versicolor
+5.7,2.9,4.2,1.3,Iris-versicolor
+6.2,2.9,4.3,1.3,Iris-versicolor
+5.1,2.5,3.0,1.1,Iris-versicolor
+5.7,2.8,4.1,1.3,Iris-versicolor
+</textarea>
         <br>
-        <button onclick="runKMeans()">Ejecutar K-medias</button>
-        <button onclick="runBayes()">Ejecutar Bayes</button>
-        <button onclick="runLloyd()">Ejecutar Lloyd</button>
-        <h2>Resultado:</h2>
-        <p id="output"></p>
+        <div class="row">
+            <button class="col-4 btn btn-primary" onclick="runKMeans()">Ejecutar K-medias</button>
+            <button class="col-4 btn btn-success" onclick="runBayes()">Ejecutar Bayes</button>
+            <button class="col-4 btn btn-warning" onclick="runLloyd()">Ejecutar Lloyd</button>
+        </div>
+        <div class="text-center">
+            <h2>Resultado:</h2>
+            <p id="output"></p>
+        </div>
         <h2>Clasificar nueva muestra</h2>
-        <input type="text" id="sampleData" placeholder="Ejemplo: 5.1,3.5,1.4,0.2">
-        <button onclick="classifySample()">Clasificar</button>
+        <div class="row">
+            <input class="col-3" type="text" id="sampleData1" placeholder="Ejemplo: 5.1">
+            <input class="col-3" type="text" id="sampleData2" placeholder="Ejemplo: 3.5">
+            <input class="col-3" type="text" id="sampleData3" placeholder="Ejemplo: 1.4">
+            <input class="col-3" type="text" id="sampleData4" placeholder="Ejemplo: 0.2">
+        </div>
+        <button class="btn btn-lg btn-outline-success w-100 mt-3" onclick="classifySample()">Clasificar</button>
         <p id="sampleOutput"></p>
     </div>
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
     <script>
-        function parseInputData() {
+        function parseInputData () {
             let input = document.getElementById("inputData").value.trim();
             return input.split("\n").map(line => {
                 let parts = line.split(",");
@@ -37,11 +173,11 @@
             });
         }
 
-        function runKMeans() {
+        function runKMeans () {
             let data = parseInputData();
             let centroids = [[4.6, 3.0, 4.0, 0.0], [6.8, 3.4, 4.6, 0.7]];
             let clusters = [[], []];
-            
+
             for (let point of data) {
                 let distances = centroids.map(c => Math.sqrt(c.reduce((sum, val, i) => sum + Math.pow(val - point.features[i], 2), 0)));
                 let clusterIndex = distances.indexOf(Math.min(...distances));
@@ -50,7 +186,7 @@
             document.getElementById("output").innerText = "Datos clasificados en " + clusters.length + " grupos";
         }
 
-        function runBayes() {
+        function runBayes () {
             let data = parseInputData();
             let probabilitySetosa = 0.5;
             let probabilityVersicolor = 0.5;
@@ -58,7 +194,7 @@
             document.getElementById("output").innerText = "Clasificación Bayesiana: " + classified.join(", ");
         }
 
-        function runLloyd() {
+        function runLloyd () {
             let data = parseInputData();
             let centroids = [[4.6, 3.0, 4.0, 0.0], [6.8, 3.4, 4.6, 0.7]];
             let maxIterations = 10;
@@ -71,22 +207,28 @@
                     let clusterIndex = distances.indexOf(Math.min(...distances));
                     clusters[clusterIndex].push(point);
                 }
-                
+
                 centroids = centroids.map((c, i) => c.map((val, j) => val + learningRate * (clusters[i].length ? (clusters[i].reduce((sum, p) => sum + p.features[j], 0) / clusters[i].length - val) : 0)));
             }
             document.getElementById("output").innerText = "Clasificación por Lloyd completada.";
         }
 
-        function classifySample() {
-            let sampleInput = document.getElementById("sampleData").value.trim();
-            let sampleFeatures = sampleInput.split(",").map(Number);
+        function classifySample () {
+            let sampleInput1 = document.getElementById("sampleData1").value.trim();
+            let sampleInput2 = document.getElementById("sampleData2").value.trim();
+            let sampleInput3 = document.getElementById("sampleData3").value.trim();
+            let sampleInput4 = document.getElementById("sampleData4").value.trim();
+
+            let sampleFeatures = [Number(sampleInput1), Number(sampleInput2), Number(sampleInput3), Number(sampleInput4)];
+            let sampleInput = sampleFeatures.join(",");
             let centroids = [[4.6, 3.0, 4.0, 0.0], [6.8, 3.4, 4.6, 0.7]];
-            
+
             let distances = centroids.map(c => Math.sqrt(c.reduce((sum, val, i) => sum + Math.pow(val - sampleFeatures[i], 2), 0)));
             let classification = distances.indexOf(Math.min(...distances)) === 0 ? "Iris-setosa" : "Iris-versicolor";
-            
+
             document.getElementById("sampleOutput").innerText = sampleInput + " pertenece a la clase " + classification;
         }
     </script>
 </body>
+
 </html>
