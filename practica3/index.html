@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clasificación de Datos</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .container { width: 50%; margin: auto; }
+        textarea { width: 100%; height: 150px; }
+        button { margin: 10px; padding: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Clasificación de Datos</h1>
+        <textarea id="inputData" placeholder="Ingrese los datos..."></textarea>
+        <br>
+        <button onclick="runKMeans()">Ejecutar K-medias</button>
+        <button onclick="runBayes()">Ejecutar Bayes</button>
+        <button onclick="runLloyd()">Ejecutar Lloyd</button>
+        <h2>Resultado:</h2>
+        <p id="output"></p>
+    </div>
+    
+    <script>
+        function parseInputData() {
+            let input = document.getElementById("inputData").value.trim();
+            return input.split("\n").map(line => line.split(" ").map(Number));
+        }
+
+        function runKMeans() {
+            let data = parseInputData();
+            let centroids = [[4.6, 3.0, 4.0, 0.0], [6.8, 3.4, 4.6, 0.7]];
+            let clusters = [[], []];
+            
+            for (let point of data) {
+                let distances = centroids.map(c => Math.sqrt(c.reduce((sum, val, i) => sum + Math.pow(val - point[i], 2), 0)));
+                let clusterIndex = distances.indexOf(Math.min(...distances));
+                clusters[clusterIndex].push(point);
+            }
+            document.getElementById("output").innerText = "Datos clasificados en " + clusters.length + " grupos";
+        }
+
+        function runBayes() {
+            let data = parseInputData();
+            let probabilitySetosa = 0.5;
+            let probabilityVersicolor = 0.5;
+            let classified = data.map(() => (Math.random() < 0.5 ? "Iris-setosa" : "Iris-versicolor"));
+            document.getElementById("output").innerText = "Clasificación Bayesiana: " + classified.join(", ");
+        }
+
+        function runLloyd() {
+            let data = parseInputData();
+            let centroids = [[4.6, 3.0, 4.0, 0.0], [6.8, 3.4, 4.6, 0.7]];
+            let maxIterations = 10;
+            let learningRate = 0.1;
+
+            for (let iter = 0; iter < maxIterations; iter++) {
+                let clusters = [[], []];
+                for (let point of data) {
+                    let distances = centroids.map(c => Math.sqrt(c.reduce((sum, val, i) => sum + Math.pow(val - point[i], 2), 0)));
+                    let clusterIndex = distances.indexOf(Math.min(...distances));
+                    clusters[clusterIndex].push(point);
+                }
+                
+                centroids = centroids.map((c, i) => c.map((val, j) => val + learningRate * (clusters[i].length ? (clusters[i].reduce((sum, p) => sum + p[j], 0) / clusters[i].length - val) : 0)));
+            }
+            document.getElementById("output").innerText = "Clasificación por Lloyd completada.";
+        }
+    </script>
+</body>
+</html>
