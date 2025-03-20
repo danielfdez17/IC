@@ -26,7 +26,10 @@
     <script>
         function parseInputData() {
             let input = document.getElementById("inputData").value.trim();
-            return input.split("\n").map(line => line.split(" ").map(Number));
+            return input.split("\n").map(line => {
+                let parts = line.split(",");
+                return { features: parts.slice(0, 4).map(Number), label: parts[4].trim() };
+            });
         }
 
         function runKMeans() {
@@ -35,7 +38,7 @@
             let clusters = [[], []];
             
             for (let point of data) {
-                let distances = centroids.map(c => Math.sqrt(c.reduce((sum, val, i) => sum + Math.pow(val - point[i], 2), 0)));
+                let distances = centroids.map(c => Math.sqrt(c.reduce((sum, val, i) => sum + Math.pow(val - point.features[i], 2), 0)));
                 let clusterIndex = distances.indexOf(Math.min(...distances));
                 clusters[clusterIndex].push(point);
             }
@@ -46,7 +49,7 @@
             let data = parseInputData();
             let probabilitySetosa = 0.5;
             let probabilityVersicolor = 0.5;
-            let classified = data.map(() => (Math.random() < 0.5 ? "Iris-setosa" : "Iris-versicolor"));
+            let classified = data.map(d => Math.random() < 0.5 ? "Iris-setosa" : "Iris-versicolor");
             document.getElementById("output").innerText = "Clasificación Bayesiana: " + classified.join(", ");
         }
 
@@ -59,12 +62,12 @@
             for (let iter = 0; iter < maxIterations; iter++) {
                 let clusters = [[], []];
                 for (let point of data) {
-                    let distances = centroids.map(c => Math.sqrt(c.reduce((sum, val, i) => sum + Math.pow(val - point[i], 2), 0)));
+                    let distances = centroids.map(c => Math.sqrt(c.reduce((sum, val, i) => sum + Math.pow(val - point.features[i], 2), 0)));
                     let clusterIndex = distances.indexOf(Math.min(...distances));
                     clusters[clusterIndex].push(point);
                 }
                 
-                centroids = centroids.map((c, i) => c.map((val, j) => val + learningRate * (clusters[i].length ? (clusters[i].reduce((sum, p) => sum + p[j], 0) / clusters[i].length - val) : 0)));
+                centroids = centroids.map((c, i) => c.map((val, j) => val + learningRate * (clusters[i].length ? (clusters[i].reduce((sum, p) => sum + p.features[j], 0) / clusters[i].length - val) : 0)));
             }
             document.getElementById("output").innerText = "Clasificación por Lloyd completada.";
         }
