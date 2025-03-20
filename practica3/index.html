@@ -8,6 +8,7 @@
         body { font-family: Arial, sans-serif; text-align: center; }
         .container { width: 50%; margin: auto; }
         textarea { width: 100%; height: 150px; }
+        input { width: 80%; padding: 5px; margin: 10px 0; }
         button { margin: 10px; padding: 10px; }
     </style>
 </head>
@@ -21,6 +22,10 @@
         <button onclick="runLloyd()">Ejecutar Lloyd</button>
         <h2>Resultado:</h2>
         <p id="output"></p>
+        <h2>Clasificar nueva muestra</h2>
+        <input type="text" id="sampleData" placeholder="Ejemplo: 5.1,3.5,1.4,0.2">
+        <button onclick="classifySample()">Clasificar</button>
+        <p id="sampleOutput"></p>
     </div>
     
     <script>
@@ -70,6 +75,17 @@
                 centroids = centroids.map((c, i) => c.map((val, j) => val + learningRate * (clusters[i].length ? (clusters[i].reduce((sum, p) => sum + p.features[j], 0) / clusters[i].length - val) : 0)));
             }
             document.getElementById("output").innerText = "Clasificación por Lloyd completada.";
+        }
+
+        function classifySample() {
+            let sampleInput = document.getElementById("sampleData").value.trim();
+            let sampleFeatures = sampleInput.split(",").map(Number);
+            let centroids = [[4.6, 3.0, 4.0, 0.0], [6.8, 3.4, 4.6, 0.7]];
+            
+            let distances = centroids.map(c => Math.sqrt(c.reduce((sum, val, i) => sum + Math.pow(val - sampleFeatures[i], 2), 0)));
+            let classification = distances.indexOf(Math.min(...distances)) === 0 ? "Iris-setosa" : "Iris-versicolor";
+            
+            document.getElementById("sampleOutput").innerText = sampleInput + " pertenece a la clase " + classification;
         }
     </script>
 </body>
