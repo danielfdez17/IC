@@ -151,14 +151,15 @@
             <h2>Resultado:</h2>
             <p id="output"></p>
         </div>
-        <h2>Clasificar nueva muestra</h2>
+        <h2>Comprobar el resultado de la clasificación </h2>
         <div class="row">
             <input class="col-3" type="text" id="sampleData1" placeholder="Ejemplo: 5.1">
             <input class="col-3" type="text" id="sampleData2" placeholder="Ejemplo: 3.5">
             <input class="col-3" type="text" id="sampleData3" placeholder="Ejemplo: 1.4">
             <input class="col-3" type="text" id="sampleData4" placeholder="Ejemplo: 0.2">
         </div>
-        <button class="btn btn-lg btn-outline-success w-100 mt-3" onclick="classifySample()">Clasificar</button>
+        <button class="btn btn-lg btn-outline-success w-100 mt-3 text-uppercase"
+            onclick="classifySample()">Clasificar</button>
         <p id="sampleOutput"></p>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -184,6 +185,7 @@
                 clusters[clusterIndex].push(point);
             }
             document.getElementById("output").innerText = "Datos clasificados en " + clusters.length + " grupos";
+            document.getElementById("sampleOutput").innerText = ""
         }
 
         function runBayes () {
@@ -192,6 +194,7 @@
             let probabilityVersicolor = 0.5;
             let classified = data.map(d => Math.random() < 0.5 ? "Iris-setosa" : "Iris-versicolor");
             document.getElementById("output").innerText = "Clasificación Bayesiana: " + classified.join(", ");
+            document.getElementById("sampleOutput").innerText = ""
         }
 
         function runLloyd () {
@@ -211,6 +214,7 @@
                 centroids = centroids.map((c, i) => c.map((val, j) => val + learningRate * (clusters[i].length ? (clusters[i].reduce((sum, p) => sum + p.features[j], 0) / clusters[i].length - val) : 0)));
             }
             document.getElementById("output").innerText = "Clasificación por Lloyd completada.";
+            document.getElementById("sampleOutput").innerText = ""
         }
 
         function classifySample () {
