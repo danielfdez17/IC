@@ -230,7 +230,9 @@
             let distances = centroids.map(c => Math.sqrt(c.reduce((sum, val, i) => sum + Math.pow(val - sampleFeatures[i], 2), 0)));
             let classification = distances.indexOf(Math.min(...distances)) === 0 ? "Iris-setosa" : "Iris-versicolor";
 
-            document.getElementById("sampleOutput").innerText = sampleInput + " pertenece a la clase " + classification;
+            const sampleOutput = document.getElementById("sampleOutput");
+            sampleOutput.style.fontSize = "2rem";
+            sampleOutput.innerText = sampleInput + " pertenece a la clase " + classification;
         }
     </script>
 </body>
