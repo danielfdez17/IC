@@ -225,15 +225,23 @@
 
             let sampleFeatures = [Number(sampleInput1), Number(sampleInput2), Number(sampleInput3), Number(sampleInput4)];
             let sampleInput = sampleFeatures.join(",");
-            let centroids = [[4.6, 3.0, 4.0, 0.0], [6.8, 3.4, 4.6, 0.7]];
+            let centroids = [
+                [4.6, 3.0, 4.0, 0.0],
+                [6.8, 3.4, 4.6, 0.7]
+            ];
 
-            let distances = centroids.map(c => Math.sqrt(c.reduce((sum, val, i) => sum + Math.pow(val - sampleFeatures[i], 2), 0)));
+            let distances = centroids.map(c =>
+                Math.sqrt(c.reduce((sum, val, i) => sum + Math.pow(val - sampleFeatures[i], 2), 0))
+            );
             let classification = distances.indexOf(Math.min(...distances)) === 0 ? "Iris-setosa" : "Iris-versicolor";
 
             const sampleOutput = document.getElementById("sampleOutput");
-            sampleOutput.style.fontSize = "2rem";
-            sampleOutput.innerText = sampleInput + " pertenece a la clase " + classification;
+            sampleOutput.style.fontSize = "1.5rem";
+            sampleOutput.innerText = `${sampleInput} pertenece a la clase ${classification}.
+Distancia a Iris-setosa: ${distances[0].toFixed(3)}
+Distancia a Iris-versicolor: ${distances[1].toFixed(3)}`;
         }
+
     </script>
 </body>
 
